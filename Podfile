@@ -12,6 +12,7 @@ target 'MVVMRxSwift' do
   pod 'RxDataSources'
   pod 'SkeletonView'
   pod 'AlamofireImage'
+  pod 'BouncyLayout'
   pod 'SwiftGen', '~> 6.0'
   target 'MVVMRxSwiftTests' do
     inherit! :search_paths

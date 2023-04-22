@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxDataSources
+import BouncyLayout
 
 class TopViewController: BaseViewController {
     
@@ -35,6 +36,9 @@ class TopViewController: BaseViewController {
         
         collectionView.delegate = self
         collectionView.dataSource = dataSource
+        
+        let layout = BouncyLayout()
+        collectionView.collectionViewLayout = layout
         
         collectionView.registerCellByNib(PhotoCollectionViewCell.self)
     }
