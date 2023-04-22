@@ -35,6 +35,10 @@
 		4D898F6929F39EA60042C407 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4D898F6B29F39EA70042C407 /* Localizable.strings */; };
 		4D898F7029F3A19F0042C407 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F6E29F3A19F0042C407 /* Localizable.swift */; };
 		4D898F7129F3A19F0042C407 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F6F29F3A19F0042C407 /* Assets.swift */; };
+		4D898F7429F3D6AB0042C407 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F7329F3D6AB0042C407 /* API.swift */; };
+		4D898F7629F3D7840042C407 /* APIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F7529F3D7840042C407 /* APIProvider.swift */; };
+		4D898F7929F3D8360042C407 /* PhotosAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F7829F3D8360042C407 /* PhotosAPI.swift */; };
+		4D898F7B29F3D8750042C407 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F7A29F3D8750042C407 /* Photo.swift */; };
 		542F94E0D0481FC965E8E68B /* Pods_MVVMRxSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7CDB3C1EB9C85B1E82AD1C7 /* Pods_MVVMRxSwiftTests.framework */; };
 		90C8553AA244046FCF986C06 /* Pods_MVVMRxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AAFF2DFA46505A591894775 /* Pods_MVVMRxSwift.framework */; };
 		F4213CBEFF576BEF090EB308 /* Pods_MVVMRxSwift_MVVMRxSwiftUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9930F6770D92125C6738656 /* Pods_MVVMRxSwift_MVVMRxSwiftUITests.framework */; };
@@ -94,6 +98,10 @@
 		4D898F6C29F39EA90042C407 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4D898F6E29F3A19F0042C407 /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		4D898F6F29F3A19F0042C407 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		4D898F7329F3D6AB0042C407 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		4D898F7529F3D7840042C407 /* APIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIProvider.swift; sourceTree = "<group>"; };
+		4D898F7829F3D8360042C407 /* PhotosAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosAPI.swift; sourceTree = "<group>"; };
+		4D898F7A29F3D8750042C407 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		723E2E465E303751DA9E186A /* Pods-MVVMRxSwift-MVVMRxSwiftUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMRxSwift-MVVMRxSwiftUITests.release.xcconfig"; path = "Target Support Files/Pods-MVVMRxSwift-MVVMRxSwiftUITests/Pods-MVVMRxSwift-MVVMRxSwiftUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8AAFF2DFA46505A591894775 /* Pods_MVVMRxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MVVMRxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6B1C4D152814AAEDF0E4278 /* Pods-MVVMRxSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMRxSwift.release.xcconfig"; path = "Target Support Files/Pods-MVVMRxSwift/Pods-MVVMRxSwift.release.xcconfig"; sourceTree = "<group>"; };
@@ -197,10 +205,10 @@
 		4D898F3029F2F8FB0042C407 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				4D898F7229F3D48B0042C407 /* Network */,
 				4D898F5429F38DCC0042C407 /* Extensions */,
 				4D898F3D29F384790042C407 /* Controls */,
 				4D898F3629F382140042C407 /* Models */,
-				4D898F3429F2FB520042C407 /* API */,
 				4D898F3329F2FB400042C407 /* Helpers */,
 				4D898F3229F2FB350042C407 /* Screens */,
 				4D898F3129F2FB270042C407 /* Define */,
@@ -238,11 +246,12 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		4D898F3429F2FB520042C407 /* API */ = {
+		4D898F3429F2FB520042C407 /* APIs */ = {
 			isa = PBXGroup;
 			children = (
+				4D898F7829F3D8360042C407 /* PhotosAPI.swift */,
 			);
-			path = API;
+			path = APIs;
 			sourceTree = "<group>";
 		};
 		4D898F3529F37DE70042C407 /* Top */ = {
@@ -258,6 +267,7 @@
 		4D898F3629F382140042C407 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4D898F7A29F3D8750042C407 /* Photo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -317,6 +327,24 @@
 				4D898F6E29F3A19F0042C407 /* Localizable.swift */,
 			);
 			path = Generated;
+			sourceTree = "<group>";
+		};
+		4D898F7229F3D48B0042C407 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				4D898F7729F3D8180042C407 /* Base */,
+				4D898F3429F2FB520042C407 /* APIs */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		4D898F7729F3D8180042C407 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				4D898F7329F3D6AB0042C407 /* API.swift */,
+				4D898F7529F3D7840042C407 /* APIProvider.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		F5FA66EA2AA8E4B9632B0A33 /* Frameworks */ = {
@@ -593,8 +621,10 @@
 			files = (
 				4D898F0529F2EF550042C407 /* ViewController.swift in Sources */,
 				4D898F3A29F3824E0042C407 /* TopViewModel.swift in Sources */,
+				4D898F7629F3D7840042C407 /* APIProvider.swift in Sources */,
 				4D898F7129F3A19F0042C407 /* Assets.swift in Sources */,
 				4D898F5C29F38F5B0042C407 /* UIViewController+.swift in Sources */,
+				4D898F7929F3D8360042C407 /* PhotosAPI.swift in Sources */,
 				4D898F5329F38BEF0042C407 /* BaseViewController.swift in Sources */,
 				4D898F4E29F38B690042C407 /* Constant.swift in Sources */,
 				4D898F5A29F38E910042C407 /* ApplicationUtil.swift in Sources */,
@@ -605,6 +635,8 @@
 				4D898F5029F38B700042C407 /* EnumDefine.swift in Sources */,
 				4D898F6029F391030042C407 /* UIApplication+.swift in Sources */,
 				4D898F4129F3888F0042C407 /* BaseNavigationViewController.swift in Sources */,
+				4D898F7B29F3D8750042C407 /* Photo.swift in Sources */,
+				4D898F7429F3D6AB0042C407 /* API.swift in Sources */,
 				4D898F4629F38A830042C407 /* Storyboard.swift in Sources */,
 				4D898F3C29F382870042C407 /* MainViewController.swift in Sources */,
 				4D898F5E29F38FA60042C407 /* LocalizableString.swift in Sources */,
