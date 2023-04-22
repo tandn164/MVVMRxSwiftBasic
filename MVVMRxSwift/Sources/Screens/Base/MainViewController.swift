@@ -14,27 +14,27 @@ enum TabType {
     var name: String {
         switch self {
         case .top:
-            return "Localizable.tabHome"
+            return Localizable.tabTop
         case .setting:
-            return "Localizable.tabNewArrival"
+            return Localizable.tabSetting
         }
     }
     
     var iconOn: UIImage? {
         switch self {
         case .top:
-            return nil
+            return .tabbarTop
         case .setting:
-            return nil
+            return .tabbarSetting
         }
     }
     
     var iconOff: UIImage? {
         switch self {
         case .top:
-            return nil
+            return .tabbarTop
         case .setting:
-            return nil
+            return .tabbarSetting
         }
     }
     

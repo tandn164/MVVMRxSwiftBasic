@@ -7,11 +7,6 @@
 
 import UIKit
 
-struct Localizable {
-    static let ok = "OK"
-    static let error = "ERROR"
-}
-
 protocol LocalizableString {
     var localized: String { get }
 }

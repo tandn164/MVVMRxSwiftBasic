@@ -30,8 +30,11 @@
 		4D898F5829F38E790042C407 /* ViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F5729F38E790042C407 /* ViewManager.swift */; };
 		4D898F5A29F38E910042C407 /* ApplicationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F5929F38E910042C407 /* ApplicationUtil.swift */; };
 		4D898F5C29F38F5B0042C407 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F5B29F38F5B0042C407 /* UIViewController+.swift */; };
-		4D898F5E29F38FA60042C407 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F5D29F38FA60042C407 /* Localizable.swift */; };
+		4D898F5E29F38FA60042C407 /* LocalizableString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F5D29F38FA60042C407 /* LocalizableString.swift */; };
 		4D898F6029F391030042C407 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F5F29F391030042C407 /* UIApplication+.swift */; };
+		4D898F6929F39EA60042C407 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4D898F6B29F39EA70042C407 /* Localizable.strings */; };
+		4D898F7029F3A19F0042C407 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F6E29F3A19F0042C407 /* Localizable.swift */; };
+		4D898F7129F3A19F0042C407 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F6F29F3A19F0042C407 /* Assets.swift */; };
 		542F94E0D0481FC965E8E68B /* Pods_MVVMRxSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7CDB3C1EB9C85B1E82AD1C7 /* Pods_MVVMRxSwiftTests.framework */; };
 		90C8553AA244046FCF986C06 /* Pods_MVVMRxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AAFF2DFA46505A591894775 /* Pods_MVVMRxSwift.framework */; };
 		F4213CBEFF576BEF090EB308 /* Pods_MVVMRxSwift_MVVMRxSwiftUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9930F6770D92125C6738656 /* Pods_MVVMRxSwift_MVVMRxSwiftUITests.framework */; };
@@ -85,8 +88,12 @@
 		4D898F5729F38E790042C407 /* ViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewManager.swift; sourceTree = "<group>"; };
 		4D898F5929F38E910042C407 /* ApplicationUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationUtil.swift; sourceTree = "<group>"; };
 		4D898F5B29F38F5B0042C407 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
-		4D898F5D29F38FA60042C407 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
+		4D898F5D29F38FA60042C407 /* LocalizableString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableString.swift; sourceTree = "<group>"; };
 		4D898F5F29F391030042C407 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
+		4D898F6A29F39EA70042C407 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4D898F6C29F39EA90042C407 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4D898F6E29F3A19F0042C407 /* Localizable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
+		4D898F6F29F3A19F0042C407 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		723E2E465E303751DA9E186A /* Pods-MVVMRxSwift-MVVMRxSwiftUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMRxSwift-MVVMRxSwiftUITests.release.xcconfig"; path = "Target Support Files/Pods-MVVMRxSwift-MVVMRxSwiftUITests/Pods-MVVMRxSwift-MVVMRxSwiftUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8AAFF2DFA46505A591894775 /* Pods_MVVMRxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MVVMRxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6B1C4D152814AAEDF0E4278 /* Pods-MVVMRxSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMRxSwift.release.xcconfig"; path = "Target Support Files/Pods-MVVMRxSwift/Pods-MVVMRxSwift.release.xcconfig"; sourceTree = "<group>"; };
@@ -161,13 +168,11 @@
 		4D898EFF29F2EF550042C407 /* MVVMRxSwift */ = {
 			isa = PBXGroup;
 			children = (
+				4D898F0E29F2EF560042C407 /* Info.plist */,
+				4D898F6229F39CC70042C407 /* Resources */,
 				4D898F3029F2F8FB0042C407 /* Sources */,
 				4D898F0029F2EF550042C407 /* AppDelegate.swift */,
 				4D898F0429F2EF550042C407 /* ViewController.swift */,
-				4D898F0629F2EF550042C407 /* Main.storyboard */,
-				4D898F0929F2EF560042C407 /* Assets.xcassets */,
-				4D898F0B29F2EF560042C407 /* LaunchScreen.storyboard */,
-				4D898F0E29F2EF560042C407 /* Info.plist */,
 			);
 			path = MVVMRxSwift;
 			sourceTree = "<group>";
@@ -228,7 +233,7 @@
 			children = (
 				4D898F5729F38E790042C407 /* ViewManager.swift */,
 				4D898F5929F38E910042C407 /* ApplicationUtil.swift */,
-				4D898F5D29F38FA60042C407 /* Localizable.swift */,
+				4D898F5D29F38FA60042C407 /* LocalizableString.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -293,6 +298,27 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		4D898F6229F39CC70042C407 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4D898F6D29F39F500042C407 /* Generated */,
+				4D898F0629F2EF550042C407 /* Main.storyboard */,
+				4D898F0929F2EF560042C407 /* Assets.xcassets */,
+				4D898F0B29F2EF560042C407 /* LaunchScreen.storyboard */,
+				4D898F6B29F39EA70042C407 /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4D898F6D29F39F500042C407 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				4D898F6F29F3A19F0042C407 /* Assets.swift */,
+				4D898F6E29F3A19F0042C407 /* Localizable.swift */,
+			);
+			path = Generated;
+			sourceTree = "<group>";
+		};
 		F5FA66EA2AA8E4B9632B0A33 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -315,6 +341,7 @@
 				4D898EFA29F2EF550042C407 /* Frameworks */,
 				4D898EFB29F2EF550042C407 /* Resources */,
 				A543070136ECD5B2F7B44B40 /* [CP] Embed Pods Frameworks */,
+				4D898F6129F39A830042C407 /* SwiftGen */,
 			);
 			buildRules = (
 			);
@@ -394,6 +421,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = 4D898EF429F2EF550042C407;
 			productRefGroup = 4D898EFE29F2EF550042C407 /* Products */;
@@ -413,6 +441,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D898F0D29F2EF560042C407 /* LaunchScreen.storyboard in Resources */,
+				4D898F6929F39EA60042C407 /* Localizable.strings in Resources */,
 				4D898F0A29F2EF560042C407 /* Assets.xcassets in Resources */,
 				4D898F0829F2EF550042C407 /* Main.storyboard in Resources */,
 				4D898F4429F38A050042C407 /* Setting.storyboard in Resources */,
@@ -458,6 +487,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		4D898F6129F39A830042C407 /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftGen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ -f \"${PODS_ROOT}/SwiftGen/bin/swiftgen\" ]]; then\n  $PODS_ROOT/SwiftGen/bin/swiftgen config run --config Scripts/swiftgen.yml\nelse\n  echo \"warning: SwiftGen is not installed. Run 'pod install --repo-update' to install it.\"\nfi\n";
 		};
 		97E4461AD16367B729D785C6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -546,6 +593,7 @@
 			files = (
 				4D898F0529F2EF550042C407 /* ViewController.swift in Sources */,
 				4D898F3A29F3824E0042C407 /* TopViewModel.swift in Sources */,
+				4D898F7129F3A19F0042C407 /* Assets.swift in Sources */,
 				4D898F5C29F38F5B0042C407 /* UIViewController+.swift in Sources */,
 				4D898F5329F38BEF0042C407 /* BaseViewController.swift in Sources */,
 				4D898F4E29F38B690042C407 /* Constant.swift in Sources */,
@@ -559,7 +607,8 @@
 				4D898F4129F3888F0042C407 /* BaseNavigationViewController.swift in Sources */,
 				4D898F4629F38A830042C407 /* Storyboard.swift in Sources */,
 				4D898F3C29F382870042C407 /* MainViewController.swift in Sources */,
-				4D898F5E29F38FA60042C407 /* Localizable.swift in Sources */,
+				4D898F5E29F38FA60042C407 /* LocalizableString.swift in Sources */,
+				4D898F7029F3A19F0042C407 /* Localizable.swift in Sources */,
 				4D898F4A29F38AE00042C407 /* TopViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -613,6 +662,15 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		4D898F6B29F39EA70042C407 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4D898F6A29F39EA70042C407 /* ja */,
+				4D898F6C29F39EA90042C407 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -620,6 +678,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -680,6 +739,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

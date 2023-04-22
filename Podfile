@@ -7,6 +7,7 @@ target 'MVVMRxSwift' do
 
   # Pods for MVVMRxSwift
   pod 'RxSwift'
+  pod 'SwiftGen', '~> 6.0'
   target 'MVVMRxSwiftTests' do
     inherit! :search_paths
     # Pods for testing
