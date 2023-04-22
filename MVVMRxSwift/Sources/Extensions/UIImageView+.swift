@@ -6,14 +6,14 @@
 //
 
 import Foundation
-import AlamofireImage
+import SDWebImage
 
 extension UIImageView {
     func setImage(withPath path: String?) {
         guard let url = try? path?.asURL() else {
             return
         }
-        self.af.setImage(withURL: url)
+        self.sd_setImage(with: url)
     }
     
     func setImage(withPath path: String?, placeholderImage placeholder: UIImage? = nil){
@@ -21,6 +21,6 @@ extension UIImageView {
             self.image =  placeholder
             return
         }
-        self.af.setImage(withURL: url, placeholderImage: placeholder)
+        self.sd_setImage(with: url, placeholderImage: placeholder)
     }
 }
