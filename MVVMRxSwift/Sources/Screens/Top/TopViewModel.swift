@@ -13,12 +13,14 @@ import RxDataSources
 class TopViewModel: ViewModelType {
     struct Input {
         let trigger: Driver<Void>
+        let selectionItem: Driver<IndexPath>
     }
     struct Output {
         let showSkeleton: Driver<Bool>
         let refreshing: Driver<Bool>
         let error: Driver<Error>
         let dataRelay: Driver<[SectionModel<String, Photo>]>
+        let selectedPhoto: Driver<Photo>
     }
        
     private var photoAPI: PhotosAPI?
@@ -48,10 +50,16 @@ class TopViewModel: ViewModelType {
             return fetching && !photos.isEmpty
         }
         
+        let selectedPhoto = input.selectionItem
+            .withLatestFrom(photos) { (indexPath, photos) -> Photo in
+                return photos[indexPath.row]
+            }.asDriver()
+        
         return Output(showSkeleton: showSkeleton,
                       refreshing: refreshing,
                       error: errors,
-                      dataRelay: models)
+                      dataRelay: models,
+                      selectedPhoto: selectedPhoto)
     }
     
 }

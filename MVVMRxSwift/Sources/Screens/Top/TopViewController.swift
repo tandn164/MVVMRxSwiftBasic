@@ -38,7 +38,8 @@ class TopViewController: BaseViewController {
             .controlEvent(.valueChanged)
             .asDriver()
         
-        let input = TopViewModel.Input(trigger:  Driver.merge(viewWillAppear, pull))
+        let input = TopViewModel.Input(trigger: Driver.merge(viewWillAppear, pull),
+                                       selectionItem: collectionView.rx.itemSelected.asDriver())
         let output = viewModel?.transform(input: input)
         
         output?.showSkeleton.drive(onNext: { [weak self] showSkeleton in
@@ -55,6 +56,10 @@ class TopViewController: BaseViewController {
         
         output?.error.drive(onNext: { [weak self] error in
             self?.showAlert(message: error.localizedDescription)
+        }).disposed(by: disposeBag)
+
+        output?.selectedPhoto.drive(onNext: { photo in
+            print("Selected Photo: ", photo)
         }).disposed(by: disposeBag)
     }
     
