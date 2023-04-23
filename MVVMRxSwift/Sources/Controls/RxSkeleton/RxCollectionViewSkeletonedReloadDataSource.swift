@@ -9,9 +9,9 @@ import SkeletonView
 import RxDataSources
 
 public class RxCollectionViewSkeletonedReloadDataSource<S: SectionModelType>
-    : RxCollectionViewSectionedReloadDataSource<S>
-    , SkeletonCollectionViewDataSource {
-
+: RxCollectionViewSectionedReloadDataSource<S>
+, SkeletonCollectionViewDataSource {
+    
     public typealias NumberOfSections = (RxCollectionViewSkeletonedReloadDataSource<S>, UICollectionView) -> Int
     public typealias NumberOfItemsInSection = (RxCollectionViewSkeletonedReloadDataSource<S>, UICollectionView, Int) -> Int
     public typealias ReuseIdentifierForItemAtIndexPath = (RxCollectionViewSkeletonedReloadDataSource<S>, UICollectionView, IndexPath) -> String
@@ -19,6 +19,8 @@ public class RxCollectionViewSkeletonedReloadDataSource<S: SectionModelType>
     var numberOfSections: NumberOfSections
     var numberOfItemsInSection: NumberOfItemsInSection
     var reuseIdentifierForItemAtIndexPath: ReuseIdentifierForItemAtIndexPath
+    
+    
     
     public init(configureCell: @escaping ConfigureCell,
                 configureSupplementaryView: ConfigureSupplementaryView? = nil,
@@ -28,7 +30,7 @@ public class RxCollectionViewSkeletonedReloadDataSource<S: SectionModelType>
                 numberOfItemsInSection: @escaping NumberOfItemsInSection = { _, cv, _ in
         guard let flowlayout = cv.collectionViewLayout as? UICollectionViewFlowLayout else { return 0 }
         return Int(ceil(cv.frame.height/flowlayout.itemSize.height))
-        },
+    },
                 reuseIdentifierForItemAtIndexPath: @escaping ReuseIdentifierForItemAtIndexPath) {
         self.numberOfSections = numberOfSections
         self.numberOfItemsInSection = numberOfItemsInSection

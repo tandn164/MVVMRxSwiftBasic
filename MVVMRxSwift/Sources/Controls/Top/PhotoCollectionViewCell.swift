@@ -14,4 +14,21 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         self.isSkeletonable = true
     }
+    
+    static func skeleton(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueCell(PhotoCollectionViewCell.self, forIndexPath: indexPath) else {
+            return UICollectionViewCell()
+        }
+        cell.imageView.showAnimatedGradientSkeleton()
+        return cell
+      }
+
+    static func configure(collectionView: UICollectionView, indexPath: IndexPath, photo: Photo) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueCell(PhotoCollectionViewCell.self, forIndexPath: indexPath) else {
+            return UICollectionViewCell()
+        }
+        cell.imageView.setImage(withPath: photo.url)
+        cell.imageView.hideSkeleton()
+        return cell
+    }
 }

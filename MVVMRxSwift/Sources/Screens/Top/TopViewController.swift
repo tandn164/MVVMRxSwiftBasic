@@ -7,26 +7,55 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 import RxDataSources
-import BouncyLayout
 
 class TopViewController: BaseViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var textField: UITextField!
-    private lazy var dataSource = collectionViewSkeletonedReloadDataSource()
+    private lazy var dataSource = collectionViewDataSource()
     
-    private var model: TopViewModel?
+    private var viewModel: TopViewModel?
     private var disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         viewType = .top
-        model = TopViewModel(view: self)
+        viewModel = TopViewModel()
         setupCollectionView()
         
         view.isSkeletonable = true
         showSkeleton()
+        bindViewModel()
+    }
+    
+    private func bindViewModel() {
+        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
+            .mapToVoid()
+            .asDriverOnErrorJustComplete()
+        let pull = (collectionView.refreshControl ?? UIRefreshControl()).rx
+            .controlEvent(.valueChanged)
+            .asDriver()
+        
+        let input = TopViewModel.Input(trigger:  Driver.merge(viewWillAppear, pull))
+        let output = viewModel?.transform(input: input)
+        
+        output?.showSkeleton.drive(onNext: { [weak self] showSkeleton in
+            if showSkeleton {
+                self?.showSkeleton()
+            } else {
+                self?.hideSkeleton()
+            }
+        }).disposed(by: disposeBag)
+        
+        output?.refreshing.drive((collectionView.refreshControl ?? UIRefreshControl()).rx.isRefreshing).disposed(by: disposeBag)
+        
+        output?.dataRelay.drive(collectionView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
+        
+        output?.error.drive(onNext: { [weak self] error in
+            self?.showAlert(message: error.localizedDescription)
+        }).disposed(by: disposeBag)
     }
     
     private func setupCollectionView() {
@@ -39,6 +68,7 @@ class TopViewController: BaseViewController {
         
         let layout = BouncyLayout()
         collectionView.collectionViewLayout = layout
+        collectionView.refreshControl = UIRefreshControl()
         
         collectionView.registerCellByNib(PhotoCollectionViewCell.self)
     }
@@ -46,13 +76,16 @@ class TopViewController: BaseViewController {
     private func showSkeleton() {
         collectionView.prepareSkeleton(completion: { done in
             self.view.showAnimatedGradientSkeleton()
-            self.model?.performGetPhotos()
         })
     }
+    
+    private func hideSkeleton() {
+        self.view.hideSkeleton()
+    }
 
-    private func collectionViewSkeletonedReloadDataSource() -> RxCollectionViewSkeletonedReloadDataSource<SectionModel<String, Photo>>  {
-        return RxCollectionViewSkeletonedReloadDataSource(configureCell: { (ds, cv, ip, item) in
-            guard let cell = cv.dequeueCell(PhotoCollectionViewCell.self, forIndexPath: ip) else {
+    private func collectionViewDataSource() -> RxCollectionViewSkeletonedReloadDataSource<SectionModel<String, Photo>>  {
+        return RxCollectionViewSkeletonedReloadDataSource(configureCell: { (dataSource, collectionView, indexPath, item) in
+            guard let cell = collectionView.dequeueCell(PhotoCollectionViewCell.self, forIndexPath: indexPath) else {
                 return UICollectionViewCell()
             }
             cell.imageView.setImage(withPath: item.downloadURL)
@@ -60,26 +93,6 @@ class TopViewController: BaseViewController {
         }, reuseIdentifierForItemAtIndexPath: { _, _, _ in
             return PhotoCollectionViewCell.identifier
         })
-    }
-}
-
-extension TopViewController: TopViewModelOutput {
-    func photosDidGetSuccess() {
-        ApplicationUtil.delay(seconds: 3) { [weak self] in
-            guard let self = self else {
-                return
-            }
-            let sections = [SectionModel(model: "", items: self.model?.photos ?? [])]
-            
-            Observable.just(sections)
-                .bind(to: self.collectionView.rx.items(dataSource: self.dataSource))
-                .disposed(by: self.disposeBag)
-            self.view.hideSkeleton()
-        }
-    }
-    
-    func photosDidGetFailed(_ error: Error) {
-        showAlert(message: error.localizedDescription)
     }
 }
 

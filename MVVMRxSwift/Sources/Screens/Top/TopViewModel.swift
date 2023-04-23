@@ -7,33 +7,51 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
+import RxDataSources
 
-protocol TopViewModelOutput: AnyObject {
-    func photosDidGetSuccess()
-    func photosDidGetFailed(_ error: Error)
-}
-
-protocol TopViewModelType {
-    var photos: [Photo] {get}
-    func performGetPhotos()
-}
-
-class TopViewModel: TopViewModelType {
-    var photos: [Photo] = []
-    private var disposeBag = DisposeBag()
-    private weak var view: TopViewModelOutput?
-
-    init(view: TopViewModelOutput) {
-        self.view = view
+class TopViewModel: ViewModelType {
+    struct Input {
+        let trigger: Driver<Void>
     }
-
-    func performGetPhotos() {
-        let photoAPI = APIProvider().makePhotosAPI()
-        photoAPI.fetchPhots().subscribe(onNext: { [weak self] photos in
-            self?.photos = photos
-            self?.view?.photosDidGetSuccess()
-        },onError: { [weak self] error in
-            self?.view?.photosDidGetFailed(error)
-        }).disposed(by: disposeBag)
+    struct Output {
+        let showSkeleton: Driver<Bool>
+        let refreshing: Driver<Bool>
+        let error: Driver<Error>
+        let dataRelay: Driver<[SectionModel<String, Photo>]>
     }
+       
+    private var photoAPI: PhotosAPI?
+    
+    func transform(input: Input) -> Output {
+        let errorTracker = ErrorTracker()
+        let activityIndicator = ActivityIndicator()
+        let photos = input.trigger.flatMapLatest {
+            return APIProvider()
+                .makePhotosAPI()
+                .fetchPhots()
+                .trackActivity(activityIndicator)
+                .trackError(errorTracker)
+                .asDriverOnErrorJustComplete()
+        }
+        
+        let errors = errorTracker.asDriver()
+        let fetching = activityIndicator.asDriver()
+        let showSkeleton = Driver.combineLatest(fetching, photos.asDriver()) { fetching, photos in
+            return fetching && photos.isEmpty
+        }
+        let models = photos.map { photos in
+            return [SectionModel(model: "", items: photos)]
+        }.asDriver()
+        
+        let refreshing = Driver.combineLatest(fetching, photos.asDriver()) { fetching, photos in
+            return fetching && !photos.isEmpty
+        }
+        
+        return Output(showSkeleton: showSkeleton,
+                      refreshing: refreshing,
+                      error: errors,
+                      dataRelay: models)
+    }
+    
 }

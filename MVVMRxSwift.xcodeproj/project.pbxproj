@@ -53,6 +53,11 @@
 		4D898F9A29F41B0B0042C407 /* RxCollectionViewSkeletonedAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F9029F41B0B0042C407 /* RxCollectionViewSkeletonedAnimatedDataSource.swift */; };
 		4D898F9B29F41B0B0042C407 /* UICollectionView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F9129F41B0B0042C407 /* UICollectionView+Rx.swift */; };
 		4D898F9F29F423560042C407 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898F9E29F423560042C407 /* UIImageView+.swift */; };
+		4D898FB729F4E1100042C407 /* BouncyLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898FB629F4E1100042C407 /* BouncyLayout.swift */; };
+		4D898FB929F52FCD0042C407 /* ErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898FB829F52FCD0042C407 /* ErrorTracker.swift */; };
+		4D898FBB29F532E70042C407 /* Observable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898FBA29F532E70042C407 /* Observable+.swift */; };
+		4D898FBD29F54B3A0042C407 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898FBC29F54B3A0042C407 /* ActivityIndicator.swift */; };
+		4D898FBF29F55F240042C407 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D898FBE29F55F240042C407 /* ViewModelType.swift */; };
 		542F94E0D0481FC965E8E68B /* Pods_MVVMRxSwiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7CDB3C1EB9C85B1E82AD1C7 /* Pods_MVVMRxSwiftTests.framework */; };
 		90C8553AA244046FCF986C06 /* Pods_MVVMRxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AAFF2DFA46505A591894775 /* Pods_MVVMRxSwift.framework */; };
 		F4213CBEFF576BEF090EB308 /* Pods_MVVMRxSwift_MVVMRxSwiftUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9930F6770D92125C6738656 /* Pods_MVVMRxSwift_MVVMRxSwiftUITests.framework */; };
@@ -130,6 +135,11 @@
 		4D898F9029F41B0B0042C407 /* RxCollectionViewSkeletonedAnimatedDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxCollectionViewSkeletonedAnimatedDataSource.swift; sourceTree = "<group>"; };
 		4D898F9129F41B0B0042C407 /* UICollectionView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Rx.swift"; sourceTree = "<group>"; };
 		4D898F9E29F423560042C407 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
+		4D898FB629F4E1100042C407 /* BouncyLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BouncyLayout.swift; sourceTree = "<group>"; };
+		4D898FB829F52FCD0042C407 /* ErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTracker.swift; sourceTree = "<group>"; };
+		4D898FBA29F532E70042C407 /* Observable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Observable+.swift"; sourceTree = "<group>"; };
+		4D898FBC29F54B3A0042C407 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		4D898FBE29F55F240042C407 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		723E2E465E303751DA9E186A /* Pods-MVVMRxSwift-MVVMRxSwiftUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMRxSwift-MVVMRxSwiftUITests.release.xcconfig"; path = "Target Support Files/Pods-MVVMRxSwift-MVVMRxSwiftUITests/Pods-MVVMRxSwift-MVVMRxSwiftUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8AAFF2DFA46505A591894775 /* Pods_MVVMRxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MVVMRxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6B1C4D152814AAEDF0E4278 /* Pods-MVVMRxSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVVMRxSwift.release.xcconfig"; path = "Target Support Files/Pods-MVVMRxSwift/Pods-MVVMRxSwift.release.xcconfig"; sourceTree = "<group>"; };
@@ -270,6 +280,9 @@
 				4D898F5729F38E790042C407 /* ViewManager.swift */,
 				4D898F5929F38E910042C407 /* ApplicationUtil.swift */,
 				4D898F5D29F38FA60042C407 /* LocalizableString.swift */,
+				4D898FB829F52FCD0042C407 /* ErrorTracker.swift */,
+				4D898FBC29F54B3A0042C407 /* ActivityIndicator.swift */,
+				4D898FBE29F55F240042C407 /* ViewModelType.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -303,6 +316,7 @@
 		4D898F3D29F384790042C407 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				4D898FB529F4E0FC0042C407 /* CollectionViewLayout */,
 				4D898F8729F41A9F0042C407 /* RxSkeleton */,
 				4D898F7C29F4172E0042C407 /* Top */,
 			);
@@ -336,6 +350,7 @@
 				4D898F5F29F391030042C407 /* UIApplication+.swift */,
 				4D898F8529F418120042C407 /* UICollectionView+.swift */,
 				4D898F9E29F423560042C407 /* UIImageView+.swift */,
+				4D898FBA29F532E70042C407 /* Observable+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -403,6 +418,14 @@
 				4D898F8C29F41B0B0042C407 /* UITableView+Rx.swift */,
 			);
 			path = RxSkeleton;
+			sourceTree = "<group>";
+		};
+		4D898FB529F4E0FC0042C407 /* CollectionViewLayout */ = {
+			isa = PBXGroup;
+			children = (
+				4D898FB629F4E1100042C407 /* BouncyLayout.swift */,
+			);
+			path = CollectionViewLayout;
 			sourceTree = "<group>";
 		};
 		F5FA66EA2AA8E4B9632B0A33 /* Frameworks */ = {
@@ -678,8 +701,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D898FBF29F55F240042C407 /* ViewModelType.swift in Sources */,
 				4D898F9F29F423560042C407 /* UIImageView+.swift in Sources */,
 				4D898F0529F2EF550042C407 /* ViewController.swift in Sources */,
+				4D898FBB29F532E70042C407 /* Observable+.swift in Sources */,
 				4D898F3A29F3824E0042C407 /* TopViewModel.swift in Sources */,
 				4D898F9329F41B0B0042C407 /* RxSkeleton.swift in Sources */,
 				4D898F7629F3D7840042C407 /* APIProvider.swift in Sources */,
@@ -696,6 +721,8 @@
 				4D898F9529F41B0B0042C407 /* RxTableViewSkeletonedReloadDataSource.swift in Sources */,
 				4D898F5629F38DDB0042C407 /* UIFont+.swift in Sources */,
 				4D898F0129F2EF550042C407 /* AppDelegate.swift in Sources */,
+				4D898FBD29F54B3A0042C407 /* ActivityIndicator.swift in Sources */,
+				4D898FB929F52FCD0042C407 /* ErrorTracker.swift in Sources */,
 				4D898F9B29F41B0B0042C407 /* UICollectionView+Rx.swift in Sources */,
 				4D898F4C29F38B460042C407 /* SettingViewController.swift in Sources */,
 				4D898F5829F38E790042C407 /* ViewManager.swift in Sources */,
@@ -704,6 +731,7 @@
 				4D898F6029F391030042C407 /* UIApplication+.swift in Sources */,
 				4D898F9A29F41B0B0042C407 /* RxCollectionViewSkeletonedAnimatedDataSource.swift in Sources */,
 				4D898F4129F3888F0042C407 /* BaseNavigationViewController.swift in Sources */,
+				4D898FB729F4E1100042C407 /* BouncyLayout.swift in Sources */,
 				4D898F9629F41B0B0042C407 /* UITableView+Rx.swift in Sources */,
 				4D898F9929F41B0B0042C407 /* RxCollectionViewSkeletonedDataSourceProxy.swift in Sources */,
 				4D898F7B29F3D8750042C407 /* Photo.swift in Sources */,

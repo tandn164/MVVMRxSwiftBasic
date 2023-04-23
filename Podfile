@@ -11,7 +11,6 @@ target 'MVVMRxSwift' do
   pod 'RxAlamofire'
   pod 'RxDataSources'
   pod 'SkeletonView'
-  pod 'BouncyLayout'
   pod 'SDWebImage'
   pod 'SwiftGen', '~> 6.0'
   target 'MVVMRxSwiftTests' do
