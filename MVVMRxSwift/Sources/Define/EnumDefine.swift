@@ -20,3 +20,8 @@ enum ViewType {
         }
     }
 }
+
+enum ThemeType {
+    case dark
+    case light
+}

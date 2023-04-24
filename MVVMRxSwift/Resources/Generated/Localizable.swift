@@ -10,6 +10,10 @@ import Foundation
 internal enum Localizable {
   /// エラー
   internal static let error = Localizable.tr("Localizable", "Error")
+  /// -
+  internal static let hyphenCharacter = Localizable.tr("Localizable", "hyphenCharacter")
+  /// 
+  internal static let noCharacterString = Localizable.tr("Localizable", "noCharacterString")
   /// オッケ
   internal static let ok = Localizable.tr("Localizable", "OK")
   /// 設定

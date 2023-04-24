@@ -10,3 +10,5 @@
 "tabSetting" = "Setting";
 "OK" = "OK";
 "Error" = "Error";
+"hyphenCharacter" = "-";
+"noCharacterString" = "";

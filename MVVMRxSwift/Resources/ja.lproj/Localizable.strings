@@ -10,3 +10,5 @@
 "tabSetting" = "設定";
 "OK" = "オッケ";
 "Error" = "エラー";
+"hyphenCharacter" = "-";
+"noCharacterString" = "";
