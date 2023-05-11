@@ -31,13 +31,12 @@ class TopViewController: BaseViewController {
     }
     
     private func bindViewModel() {
-        let viewWillAppear = rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
-            .mapToVoid()
-            .asDriverOnErrorJustComplete()
-        let pull = (collectionView.refreshControl ?? UIRefreshControl()).rx
-            .controlEvent(.valueChanged)
-            .asDriver()
-        
+        let viewWillAppear = willAppear.mapToVoid().asDriverOnErrorJustComplete()
+        let pull = (collectionView.headerRefresh?.state.flatMapLatest({ state in
+            state == .willRefresh ? Observable.just(()) : Observable.empty()
+        }) ?? Observable.empty()).asDriverOnErrorJustComplete()
+//        let pull = (collectionView.backgroundView as? RefreshControl ?? RefreshControl()).onRefreshingRelay.mapToVoid().asDriverOnErrorJustComplete()
+
         let input = TopViewModel.Input(trigger: Driver.merge(viewWillAppear, pull),
                                        selectionItem: collectionView.rx.itemSelected.asDriver())
         let output = viewModel?.transform(input: input)
@@ -50,7 +49,8 @@ class TopViewController: BaseViewController {
             }
         }).disposed(by: disposeBag)
         
-        output?.refreshing.drive((collectionView.refreshControl ?? UIRefreshControl()).rx.isRefreshing).disposed(by: disposeBag)
+//        output?.refreshing.drive((collectionView.backgroundView as? RefreshControl ?? RefreshControl()).rx.isRefreshing).disposed(by: disposeBag)
+        output?.refreshing.drive((collectionView.headerRefresh ?? HeaderRefreshView()).rx.isRefreshing).disposed(by: disposeBag)
         
         output?.dataRelay.drive(collectionView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
         
@@ -73,7 +73,9 @@ class TopViewController: BaseViewController {
         
         let layout = BouncyLayout()
         collectionView.collectionViewLayout = layout
-        collectionView.refreshControl = UIRefreshControl()
+//        collectionView.refreshControl = UIRefreshControl()
+//        collectionView.backgroundView = RefreshControl()
+        collectionView.addRefreshControl()
         
         collectionView.registerCellByNib(PhotoCollectionViewCell.self)
     }

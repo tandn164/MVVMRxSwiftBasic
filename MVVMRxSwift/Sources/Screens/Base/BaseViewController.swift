@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BaseViewController: UIViewController {
+class BaseViewController: BaseRxViewController {
     
     override var hidesBottomBarWhenPushed: Bool {
         get {
