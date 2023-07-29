@@ -10,8 +10,8 @@ import Foundation
 class APIProvider {
     private let apiEndpoint: String
 
-    public init() {
-        apiEndpoint = "https://picsum.photos/v2"
+    public init(apiEndpoint: String) {
+        self.apiEndpoint = apiEndpoint
     }
 
     func makePhotosAPI() -> PhotosAPI {

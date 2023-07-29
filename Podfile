@@ -7,9 +7,8 @@ target 'MVVMRxSwift' do
 
   # Pods for MVVMRxSwift
   pod 'RxSwift'
-  pod 'Alamofire'
+  pod 'RxCocoa'
   pod 'RxAlamofire'
-  pod 'RxDataSources'
   pod 'SkeletonView'
   pod 'SDWebImage'
   pod 'SwiftGen', '~> 6.0'

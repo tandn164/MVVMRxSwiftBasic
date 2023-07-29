@@ -8,58 +8,30 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RxDataSources
+import SkeletonView
 
 class TopViewController: BaseViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var textField: UITextField!
-    private lazy var dataSource = collectionViewDataSource()
     
-    private var viewModel: TopViewModel?
+    private var viewModel = TopViewModel()
     private var disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         viewType = .top
-        viewModel = TopViewModel()
         setupCollectionView()
         
         view.isSkeletonable = true
         showSkeleton()
         bindViewModel()
+        viewModel.fetchPhotos()
     }
     
     private func bindViewModel() {
-        let viewWillAppear = willAppear.mapToVoid().asDriverOnErrorJustComplete()
-        let pull = (collectionView.headerRefresh?.state.flatMapLatest({ state in
-            state == .willRefresh ? Observable.just(()) : Observable.empty()
-        }) ?? Observable.empty()).asDriverOnErrorJustComplete()
-//        let pull = (collectionView.backgroundView as? RefreshControl ?? RefreshControl()).onRefreshingRelay.mapToVoid().asDriverOnErrorJustComplete()
-
-        let input = TopViewModel.Input(trigger: Driver.merge(viewWillAppear, pull),
-                                       selectionItem: collectionView.rx.itemSelected.asDriver())
-        let output = viewModel?.transform(input: input)
-        
-        output?.showSkeleton.drive(onNext: { [weak self] showSkeleton in
-            if showSkeleton {
-                self?.showSkeleton()
-            } else {
-                self?.hideSkeleton()
-            }
-        }).disposed(by: disposeBag)
-        
-//        output?.refreshing.drive((collectionView.backgroundView as? RefreshControl ?? RefreshControl()).rx.isRefreshing).disposed(by: disposeBag)
-        output?.refreshing.drive((collectionView.headerRefresh ?? HeaderRefreshView()).rx.isRefreshing).disposed(by: disposeBag)
-        
-        output?.dataRelay.drive(collectionView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
-        
-        output?.error.drive(onNext: { [weak self] error in
-            self?.showAlert(message: error.localizedDescription)
-        }).disposed(by: disposeBag)
-
-        output?.selectedPhoto.drive(onNext: { photo in
-            print("Selected Photo: ", photo)
+        viewModel.photos.drive(onNext: {[unowned self] (_) in
+            self.collectionView.reloadData()
         }).disposed(by: disposeBag)
     }
     
@@ -69,13 +41,10 @@ class TopViewController: BaseViewController {
         collectionView.showsVerticalScrollIndicator = true
         
         collectionView.delegate = self
-        collectionView.dataSource = dataSource
+        collectionView.dataSource = self
         
         let layout = BouncyLayout()
         collectionView.collectionViewLayout = layout
-//        collectionView.refreshControl = UIRefreshControl()
-//        collectionView.backgroundView = RefreshControl()
-        collectionView.addRefreshControl()
         
         collectionView.registerCellByNib(PhotoCollectionViewCell.self)
     }
@@ -89,21 +58,21 @@ class TopViewController: BaseViewController {
     private func hideSkeleton() {
         self.view.hideSkeleton()
     }
-
-    private func collectionViewDataSource() -> RxCollectionViewSkeletonedReloadDataSource<SectionModel<String, Photo>>  {
-        return RxCollectionViewSkeletonedReloadDataSource(configureCell: { (dataSource, collectionView, indexPath, item) in
-            guard let cell = collectionView.dequeueCell(PhotoCollectionViewCell.self, forIndexPath: indexPath) else {
-                return UICollectionViewCell()
-            }
-            cell.imageView.setImage(withPath: item.downloadURL)
-            return cell
-        }, reuseIdentifierForItemAtIndexPath: { _, _, _ in
-            return PhotoCollectionViewCell.identifier
-        })
-    }
 }
 
-extension TopViewController: UICollectionViewDelegateFlowLayout {
+extension TopViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.numberOfImages
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueCell(PhotoCollectionViewCell.self, forIndexPath: indexPath) else {
+            return UICollectionViewCell()
+        }
+        cell.imageView.setImage(withPath: viewModel.photo(indexPath.item).downloadURL)
+        return cell
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 15
     }

@@ -8,58 +8,54 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import RxDataSources
 
-class TopViewModel: ViewModelType {
-    struct Input {
-        let trigger: Driver<Void>
-        let selectionItem: Driver<IndexPath>
-    }
-    struct Output {
-        let showSkeleton: Driver<Bool>
-        let refreshing: Driver<Bool>
-        let error: Driver<Error>
-        let dataRelay: Driver<[SectionModel<String, Photo>]>
-        let selectedPhoto: Driver<Photo>
-    }
-       
-    private var photoAPI: PhotosAPI?
+class TopViewModel {
+    private let _photos = BehaviorRelay<[Photo]>(value: [])
+    private let _isFetching = BehaviorRelay<Bool>(value: false)
+    private let _error = BehaviorRelay<String?>(value: nil)
     
-    func transform(input: Input) -> Output {
-        let errorTracker = ErrorTracker()
-        let activityIndicator = ActivityIndicator()
-        let photos = input.trigger.flatMapLatest {
-            return APIProvider()
-                .makePhotosAPI()
-                .fetchPhots()
-                .trackActivity(activityIndicator)
-                .trackError(errorTracker)
-                .asDriverOnErrorJustComplete()
-        }
+    private let disposeBag = DisposeBag()
+    
+    func fetchPhotos() {
+        self._photos.accept([])
+        self._isFetching.accept(true)
+        self._error.accept(nil)
         
-        let errors = errorTracker.asDriver()
-        let fetching = activityIndicator.asDriver()
-        let showSkeleton = Driver.combineLatest(fetching, photos.asDriver()) { fetching, photos in
-            return fetching && photos.isEmpty
-        }
-        let models = photos.map { photos in
-            return [SectionModel(model: "", items: photos)]
-        }.asDriver()
-        
-        let refreshing = Driver.combineLatest(fetching, photos.asDriver()) { fetching, photos in
-            return fetching && !photos.isEmpty
-        }
-        
-        let selectedPhoto = input.selectionItem
-            .withLatestFrom(photos) { (indexPath, photos) -> Photo in
-                return photos[indexPath.row]
-            }.asDriver()
-        
-        return Output(showSkeleton: showSkeleton,
-                      refreshing: refreshing,
-                      error: errors,
-                      dataRelay: models,
-                      selectedPhoto: selectedPhoto)
+        APIProvider(apiEndpoint: "https://picsum.photos/v2").makePhotosAPI().fetchPhots()
+            .subscribe(
+                onNext: { [weak self] response in
+                    self?._isFetching.accept(false)
+                    self?._photos.accept(response)
+                },
+                onError: { error in
+                    self._isFetching.accept(false)
+                    self._error.accept(error.localizedDescription)
+                }).disposed(by: self.disposeBag)
+    }
+}
+
+extension TopViewModel {
+    var isFetching: Driver<Bool> {
+        return _isFetching.asDriver()
     }
     
+    var photos: Driver<[Photo]> {
+        return _photos.asDriver()
+    }
+    
+    var error: Driver<String?> {
+        return _error.asDriver()
+    }
+    
+    var hasError: Bool {
+        return _error.value != nil
+    }
+    
+    var numberOfImages: Int {
+        return _photos.value.count
+    }
+    
+    func photo(_ index: Int) -> Photo {
+        return _photos.value[index]
+    }
 }
